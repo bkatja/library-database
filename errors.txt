@@ -1,0 +1,7 @@
+The Metamorphosis/Franz Kafka/9780553213690/1996
+Crime and Punishment/Fyodor Dostoevsky/9780486415871/2001
+Invalid Book Entry Without Proper Format
+The Great Gatsby/F. Scott Fitzgerald/0743273565/2004  # Wrong ISBN (Missing a digit)
+To Kill a Mockingbird/Harper Lee/9780061120084/2006
+Jane Eyre/Charlotte Brontë/9780141441146/2006
+A Bad Line//9780451524935/2008  # Missing author
