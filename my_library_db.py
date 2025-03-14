@@ -105,14 +105,7 @@ if __name__ == "__main__":
         print(f"\n[ERROR] File '{file_path}' not found.\n")
         sys.exit(1)
     
-    if os.path.getsize(file_path) == 0:
-        print(f"\n[ERROR] File '{file_path}' is empty.\n")
-        sys.exit(1)
-    
     books = read_books(file_path)
-    if not books:
-        print(f"\n[ERROR] File '{file_path}' contains no valid book entries. Please fix the format.\n")
-        sys.exit(1)
     
     print_header()
     show_menu(file_path, books)

@@ -84,14 +84,12 @@ def is_valid_isbn(isbn):
     if len(isbn) == 10:
         total = sum((i + 1) * int(digit) for i, digit in enumerate(isbn))
         if total % 11 != 0:
-            print(f"[ERROR] Invalid ISBN-10! Checksum failed for {isbn}. ISBN-10 must satisfy the modulus 11 rule.")
             return False
         return True
 
     elif len(isbn) == 13:
         total = sum((3 if i % 2 else 1) * int(digit) for i, digit in enumerate(isbn))
         if total % 10 != 0:
-            print(f"[ERROR] Invalid ISBN-13! Checksum failed for {isbn}. ISBN-13 must satisfy the modulus 10 rule.")
             return False
         return True
 
@@ -128,18 +126,25 @@ def get_valid_isbn(books):
         if isbn.upper() == "EXIT":
             print("\n[INFO] Operation canceled.\n")
             return None
+        
+        if not (isbn.isdigit() and len(isbn) in (10, 13)):
+            print("[ERROR] ISBN must be a 10 or 13-digit number.")
+            continue
+
         if isbn in ("0000000000", "0000000000000"):
             print("\n[ERROR] Incorrect ISBN. Please enter a valid ISBN.")
             continue
-        if isbn.isdigit() and len(isbn) in (10, 13):
-            # Check for duplicate ISBN
-            if any(book['ISBN'] == isbn for book in books):
-                print("\n[WARNING] A book with this ISBN already exists:")
-                for book in books:
-                    if book['ISBN'] == isbn:
-                        print(f"{book['Title']} | {book['Author']} | {book['ISBN']} | {book['Year']}")
-                if confirm_action("\nProceed with adding this book anyway? (Y/N): ") == "N":
-                    print("\n[INFO] Operation canceled.\n")
-                    return None
-            return isbn
-        print("[ERROR] Invalid ISBN! It must be a valid 10 or 13-digit number.")
+
+        if not is_valid_isbn(isbn):
+            print("[ERROR] Invalid ISBN! It does not satisfy the checksum rules.")
+            continue
+
+        if any(book['ISBN'] == isbn for book in books):
+            print("\n[WARNING] A book with this ISBN already exists:")
+            for book in books:
+                if book['ISBN'] == isbn:
+                    print(f"{book['Title']} | {book['Author']} | {book['ISBN']} | {book['Year']}")
+            if confirm_action("\nProceed with adding this book anyway? (Y/N): ") == "N":
+                print("\n[INFO] Operation canceled.\n")
+                return None
+        return isbn
